@@ -1,0 +1,355 @@
+{
+  "info": {
+    "name": "GitHub ReBAC System",
+    "description": "Complete API collection for testing the GitHub-style repository manager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "aliceEmail",
+      "value": "alice@example.com",
+      "type": "string"
+    },
+    {
+      "key": "bobEmail",
+      "value": "bob@example.com",
+      "type": "string"
+    },
+    {
+      "key": "charlieEmail",
+      "value": "charlie@example.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Repositories",
+      "item": [
+        {
+          "name": "Create Repository",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"api-server\",\n  \"orgId\": 1,\n  \"visibility\": \"private\",\n  \"description\": \"Main API server\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/repositories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "repositories"]
+            }
+          }
+        },
+        {
+          "name": "Get User Repositories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/repositories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "repositories"]
+            }
+          }
+        },
+        {
+          "name": "Get Repository",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/repositories/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "repositories", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Repository",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated API server description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/repositories/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "repositories", "1"]
+            }
+          }
+        },
+        {
+          "name": "Add Collaborator",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{bobEmail}}\",\n  \"role\": \"write\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/repositories/1/collaborators",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "repositories", "1", "collaborators"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "Create Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Backend Engineers\",\n  \"orgId\": 1,\n  \"description\": \"Backend development team\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "teams"]
+            }
+          }
+        },
+        {
+          "name": "Add Team Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userEmail\": \"{{bobEmail}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/teams/1/members",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "teams", "1", "members"]
+            }
+          }
+        },
+        {
+          "name": "Grant Team Repo Access",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"repoId\": 1,\n  \"role\": \"write\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/teams/1/repositories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "teams", "1", "repositories"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pull Requests",
+      "item": [
+        {
+          "name": "Create Pull Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"repoId\": 1,\n  \"title\": \"Add user authentication\",\n  \"description\": \"Implements JWT authentication\",\n  \"sourceBranch\": \"feature/auth\",\n  \"targetBranch\": \"main\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pull-requests",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pull-requests"]
+            }
+          }
+        },
+        {
+          "name": "Approve Pull Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{bobEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comment\": \"LGTM! Great work.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pull-requests/1/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pull-requests", "1", "approve"]
+            }
+          }
+        },
+        {
+          "name": "Merge Pull Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/pull-requests/1/merge",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pull-requests", "1", "merge"]
+            }
+          }
+        },
+        {
+          "name": "Create Branch Protection",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "{{aliceEmail}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"repoId\": 1,\n  \"branchPattern\": \"main\",\n  \"requiredApprovals\": 2,\n  \"requireStatusChecks\": false,\n  \"requireConversationResolution\": false,\n  \"allowAdminOverride\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pull-requests/branch-protection",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pull-requests", "branch-protection"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
